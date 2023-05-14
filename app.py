@@ -22,11 +22,14 @@ if st.button("Get new quote"):
     response = requests.get(url, params=params)
     if response.status_code == 200:
         # data = response.json()
-        data = json.loads(response.text)
-        print(data)
-        st.write("")
-        st.write(f"<p style='font-size:20px;'><i>{data['quoteText']}</i></p>", unsafe_allow_html=True)
-        st.write(f"by - {data['quoteAuthor']}" if data['quoteAuthor'] else "by - Unknown")
-        st.balloons()
+        try:
+            data = json.loads(response.text)
+            print(data)
+            st.write("")
+            st.write(f"<p style='font-size:20px;'><i>{data['quoteText']}</i></p>", unsafe_allow_html=True)
+            st.write(f"by - {data['quoteAuthor']}" if data['quoteAuthor'] else "by - Unknown")
+            st.balloons()
+        except:
+            st.write("Error retrieving quote. Please try again later.")
     else:
         st.write("Error retrieving quote. Please try again later.")
